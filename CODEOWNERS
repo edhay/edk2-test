@@ -15,7 +15,7 @@
 * @edhay
 
 # uefi-sct owners
-uefi-sct/** @edhay @sunnywang-arm @anncheng-arm
+uefi-sct/ @edhay @sunnywang-arm @anncheng-arm
 
 # TCG2 owner
-uefi-sct/SctPkg/TestCase/UEFI/EFI/Protocol/TCG2/** @stuyod01
+uefi-sct/SctPkg/TestCase/UEFI/EFI/Protocol/TCG2/ @stuyod01
