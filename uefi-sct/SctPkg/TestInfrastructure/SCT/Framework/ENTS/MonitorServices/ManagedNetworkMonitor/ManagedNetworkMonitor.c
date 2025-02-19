@@ -850,6 +850,7 @@ Returns:
   }
 
   IsOver = FALSE;
+  FragFlag.LLFlag = 0;
   FragFlag.LLFlag ^= FragFlag.LLFlag;
   FragFlag.Flag.SeqId   = HTONL (Sequence);
   FragFlag.Flag.OpCode  = LINK_OPERATION_DATA;
@@ -879,6 +880,7 @@ Returns:
     //
     // Build App Flag
     //
+    AppFlag.LLFlag = 0;
     AppFlag.LLFlag ^= AppFlag.LLFlag;
     AppSequence = AppSequenceSavedForResend;
     AppFlag.Flag.SeqId = HTONL(AppSequence);
@@ -1174,6 +1176,7 @@ Returns:
   }
 
   IsOver = FALSE;
+  FragFlag.LLFlag = 0;
   FragFlag.LLFlag ^= FragFlag.LLFlag;
 
   RxData = RxToken.Packet.RxData;
@@ -1519,6 +1522,7 @@ Returns:
     return EFI_OUT_OF_RESOURCES;
   }
 
+  FragFlag.LLFlag       = 0;
   FragFlag.LLFlag       ^= FragFlag.LLFlag;
   FragFlag.Flag.SeqId   = HTONL (SeqId);
   FragFlag.Flag.OpCode  = Type;

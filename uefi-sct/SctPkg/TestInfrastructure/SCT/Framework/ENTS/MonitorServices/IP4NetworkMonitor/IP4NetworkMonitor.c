@@ -736,6 +736,7 @@ Returns:
     return Status;
   }
 
+  FragFlag.LLFlag = 0;
   FragFlag.LLFlag ^= FragFlag.LLFlag;
 
   //
@@ -1218,6 +1219,7 @@ Returns:
   EFI_STATUS        Status;
   EAS_IP4_FRAG_FLAG FragFlag;
 
+  FragFlag.LLFlag = 0;
   FragFlag.LLFlag ^= FragFlag.LLFlag;
   FragFlag.Flag.SeqId   = HTONL (SeqId);
   FragFlag.Flag.OpCode  = LINK_OPERATION_DATA_ACK;

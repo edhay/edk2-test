@@ -49,6 +49,8 @@ UpdateInfoFileName (EFI_FILE_INFO **InfoBuffer, CHAR16* ChangeFileName)
   UINTN         Size;
   EFI_FILE_INFO *FileInfo;
 
+  Status = EFI_SUCCESS;
+
   if (InfoBuffer == NULL || ChangeFileName == NULL) {
     return EFI_INVALID_PARAMETER;
   }
@@ -704,6 +706,8 @@ BBTestOpenConformanceTestCheckpoint2 (
   EFI_FILE                  *FileHandle;
   UINTN                     FileNameLength;
   UINTN                     FileIndex;
+
+  RandomValue = 0;
 
   Status = SimpleFileSystem->OpenVolume (SimpleFileSystem, &Root);
   if (EFI_ERROR (Status)) {

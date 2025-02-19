@@ -1209,6 +1209,8 @@ Returns:
 
   commentNo = 0;
 
+  Buffer[0] = NULL;
+
   //
   // File not modified, needn't to write back to the disk
   //

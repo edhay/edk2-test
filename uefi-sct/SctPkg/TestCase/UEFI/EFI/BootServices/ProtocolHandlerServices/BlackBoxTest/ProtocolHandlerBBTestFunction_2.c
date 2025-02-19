@@ -7617,6 +7617,16 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint4 (
   StatusForGuid109 = EFI_SUCCESS;
   AssertionTypeForGuid109 = EFI_TEST_ASSERTION_PASSED;
 
+  AssertionTypeArrayForGuid108[0] = EFI_TEST_ASSERTION_PASSED;
+  AssertionTypeArrayForGuid108[1] = EFI_TEST_ASSERTION_PASSED;
+  FirstNotifiedTimesArray[0] = 0;
+  FirstNotifiedTimesArray[1] = 0;
+
+  AssertionTypeArrayForGuid110[0] = EFI_TEST_ASSERTION_PASSED;
+  AssertionTypeArrayForGuid110[1] = EFI_TEST_ASSERTION_PASSED;
+  SecondNotifiedTimesArray[0] = 0;
+  SecondNotifiedTimesArray[1] = 0;
+
   Status = CheckForCleanEnvironment (&Numbers);
   if (EFI_ERROR(Status)) {
     StandardLib->RecordAssertion (
@@ -8182,6 +8192,11 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint6 (
   NotifyContextArray[0].Status = 0x5a;
   NotifyContextArray[1].Status = 0x5a;
 
+  FirstNotifyContextArray[0].Status = EFI_SUCCESS;
+  FirstNotifyContextArray[1].Status = EFI_SUCCESS;
+  FirstNotifyContextArray[0].NoHandles = 0;
+  FirstNotifyContextArray[1].NoHandles = 0;
+
   Status1 = gtBS->CreateEvent (
                     EVT_NOTIFY_SIGNAL,
                     TPL_CALLBACK,
@@ -8483,6 +8498,22 @@ BBTestRegisterProtocolNotifyInterfaceTestCheckPoint7 (
 
   StatusForGuid124 = EFI_SUCCESS;
   AssertionTypeForGuid124 = EFI_TEST_ASSERTION_PASSED;
+
+  FirstNotifyContextArray[0].Status = EFI_SUCCESS;
+  FirstNotifyContextArray[1].Status = EFI_SUCCESS;
+  FirstNotifyContextArray[0].NoHandles = 0;
+  FirstNotifyContextArray[1].NoHandles = 0;
+
+  AssertionTypeArrayForGuid123[0] = EFI_TEST_ASSERTION_PASSED;
+  AssertionTypeArrayForGuid123[1] = EFI_TEST_ASSERTION_PASSED;
+
+  SecondNotifyContextArray[0].Status = EFI_SUCCESS;
+  SecondNotifyContextArray[1].Status = EFI_SUCCESS;
+  SecondNotifyContextArray[0].NoHandles = 0;
+  SecondNotifyContextArray[1].NoHandles = 0;
+
+  AssertionTypeArrayForGuid125[0] = EFI_TEST_ASSERTION_PASSED;
+  AssertionTypeArrayForGuid125[1] = EFI_TEST_ASSERTION_PASSED;
 
   Status = CheckForCleanEnvironment (&Numbers);
   if (EFI_ERROR(Status)) {

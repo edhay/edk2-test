@@ -468,6 +468,8 @@ BBTestSetStateConformanceTestCheckpoint1 (
   EFI_TEST_ASSERTION    AssertionType;
   EFI_TPL               OldTpl;
 
+  Status = EFI_SUCCESS;
+
   //
   //Call SetState with KeyToggleState being NULL
   //
@@ -544,6 +546,8 @@ BBTestSetStateConformanceTestCheckpoint2 (
                           0
                           };
 
+  Status = EFI_SUCCESS;
+
   //
   //Call SetState with KeyToggleState being a unsupported bit set
   //
@@ -600,6 +604,8 @@ BBTestRegisterKeyNotifyConformanceTestCheckpoint1 (
   EFI_TEST_ASSERTION    AssertionType;
   VOID                  *NotifyHandle;
   EFI_TPL               OldTpl;
+
+  Status = EFI_SUCCESS;
 
   //
   //Call RegisterKeyNotify with KeyData being NULL
@@ -725,6 +731,8 @@ BBTestRegisterKeyNotifyConformanceTestCheckpoint3 (
 
   Key.Key.UnicodeChar = 'R';
   Key.Key.ScanCode = 0X00;
+
+  Status = EFI_SUCCESS;
 
   //
   //Call RegisterKeyNotify with NotifyHandle being NULL

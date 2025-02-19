@@ -1170,11 +1170,16 @@ BBTestConfigToBlockConformanceTestCheckpoint3(
   EFI_STRING            ConfigResp;
   UINT8                 Block[TESTBLOCKZISE];
   UINTN                 BlockSize;
+  UINTN                 Index;
   EFI_STRING            Progress;
   EFI_TEST_ASSERTION    AssertionType;
 
   BlockSize = TESTBLOCKZISE;
   Progress = NULL;
+
+  for (Index = 0; Index < TESTBLOCKZISE; Index++) {
+    Block[Index] = 0;
+  }
   
   ConfigResp =L"GUID=970eb94aa0d449f7b980bdaa47d42527&NAME=006a0069006e0039&PATH=958720&OFFSET=5&WIDTH=1&VALUE=57&OFFSET=7&WIDTH=2&VALUE=AA55&a9=qin9";
   
@@ -1219,7 +1224,7 @@ BBTestConfigToBlockConformanceTestCheckpoint4(
   EFI_STATUS            Status;
   EFI_STRING            ConfigResp;
   UINT8                 Block[TESTBLOCKZISE];
-  UINTN                 BlockSize;
+  UINTN                 BlockSize; 
   EFI_STRING            Progress;
   EFI_TEST_ASSERTION    AssertionType;
 

@@ -574,6 +574,8 @@ BBTestOpenExConformanceTestCheckpoint2 (
   EFI_TPL                   OldTpl;
   UINTN                     Index;
 
+  RandomValue = 0;
+
   //
   // Check if Async File IO is supported
   //
