@@ -15,9 +15,10 @@ on:
     branches:
       - master
     types: [opened, ready_for_review, reopened, synchronize]
-
+ 
 env:
   GET_MAINTAINER_REL_PATH: "uefi-sct/HowToBuild/GetMaintainer.py"
+  run: echo "::debug::In env."
 
 jobs:
   auto-request-review:
@@ -25,13 +26,16 @@ jobs:
     # Do not run on draft PRs and only run on PRs in the tianocore organization
     if: ${{ github.event.pull_request.draft == false && github.repository_owner == 'edhay' }}
     runs-on: ubuntu-latest
-
+ 
     permissions:
       contents: read
       issues: write
       pull-requests: write
 
     steps:
+      - name: Print a Debug Message
+        run: echo "::debug::This is a debug message."
+
       - name: Generate Token
         id: generate-token
         uses: actions/create-github-app-token@v2
@@ -62,6 +66,7 @@ jobs:
       - name: Install PIP Modules
         run: pip install -r .github/scripts/requirements.txt --upgrade
 
+        
       - name: Add Reviewers to Pull Request
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
@@ -71,3 +76,6 @@ jobs:
           TARGET_BRANCH: ${{ github.event.pull_request.base.ref }}
           WORKSPACE_PATH: ${{ github.workspace }}
         run: python .github/scripts/RequestPrReviewers.py
+
+      - name: Print a Debug Message
+        run: echo "At the end."
