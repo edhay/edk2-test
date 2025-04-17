@@ -17,7 +17,7 @@ on:
     types: [opened, ready_for_review, reopened, synchronize]
 
 env:
-  GET_MAINTAINER_REL_PATH: "BaseTools/Scripts/GetMaintainer.py"
+  GET_MAINTAINER_REL_PATH: "uefi-sct/HowToBuild/GetMaintainer.py"
 
 jobs:
   auto-request-review:
