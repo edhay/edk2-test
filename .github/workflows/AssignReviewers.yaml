@@ -1,9 +1,5 @@
 # This workflow automatically adds the appropriate reviewers to a pull request.
 #
-# The workflow directly reuses logic in the BaseTools/Scripts/GetMaintainer.py script
-# to determine the appropriate reviewers, so it matches what a user would see running
-# the script locally.
-#
 # Copyright (c) Microsoft Corporation.
 # SPDX-License-Identifier: BSD-2-Clause-Patent
 
@@ -19,6 +15,18 @@ env:
   GET_MAINTAINER_REL_PATH: "uefi-sct/HowToBuild/GetMaintainer.py"
 
 jobs:
+  sanity-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm Workflow Trigger
+        run: |
+          echo "Sanity Check: Workflow was triggered."
+          echo "Event Name: ${{ github.event_name }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "PR Number: ${{ github.event.number || 'N/A' }}"
+          echo "PR Draft Status: ${{ github.event.pull_request.draft || 'N/A' }}"
+
   auto-request-review:
     name: Add Pull Request Reviewers
     # Do not run on draft PRs and only run on PRs in the tianocore organization
