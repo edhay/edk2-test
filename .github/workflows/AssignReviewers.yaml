@@ -53,7 +53,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             .github
-            BaseTools/Scripts
+            uefi-sct/HowToBuild/
             Maintainers.txt
 
       - name: Setup Python
