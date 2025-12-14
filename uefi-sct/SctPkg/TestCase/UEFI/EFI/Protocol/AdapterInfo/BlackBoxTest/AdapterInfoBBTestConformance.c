@@ -45,6 +45,12 @@ BBTestGetInformationConformanceTestCheckpoint3 (
   IN EFI_ADAPTER_INFORMATION_PROTOCOL      *AdapterInfo
   );
   
+EFI_STATUS
+EFIAPI
+BBTestGetInformationConformanceTestCheckpoint4 (
+  IN EFI_STANDARD_TEST_LIBRARY_PROTOCOL    *StandardLib,
+  IN EFI_ADAPTER_INFORMATION_PROTOCOL      *AdapterInfo
+  );
 
   
 EFI_STATUS
@@ -125,6 +131,8 @@ BBTestGetInformationConformanceTest (
   BBTestGetInformationConformanceTestCheckpoint2( StandardLib, AdapterInfo );
   
   BBTestGetInformationConformanceTestCheckpoint3( StandardLib, AdapterInfo );
+
+  BBTestGetInformationConformanceTestCheckpoint4( StandardLib, AdapterInfo );
 
   
   return EFI_SUCCESS;
@@ -463,6 +471,119 @@ BBTestGetInformationConformanceTestCheckpoint3 (
   }
 
   return EFI_SUCCESS;
+}
+
+
+EFI_STATUS
+EFIAPI
+BBTestGetInformationConformanceTestCheckpoint4 (
+  IN EFI_STANDARD_TEST_LIBRARY_PROTOCOL         *StandardLib,
+  IN EFI_ADAPTER_INFORMATION_PROTOCOL           *AdapterInfo
+  )
+{
+  EFI_STATUS            Status;
+  EFI_TEST_ASSERTION    AssertionType;
+                        
+  EFI_GUID              *InformationType;
+  VOID                  *InformationBlock;
+  UINTN                 InformationBlockSize;
+
+  EFI_GUID              *InfoTypesBuffer;
+  UINTN                 InfoTypesBufferCount = 0;
+  UINTN                 Index;
+                        
+  InformationBlock      = NULL;
+  InfoTypesBuffer       = NULL;
+
+  BOOLEAN testFailed = 0;
+    
+  Status = AdapterInfo->GetSupportedTypes (
+                            AdapterInfo,
+                            &InfoTypesBuffer,
+                            &InfoTypesBufferCount
+                            );
+    
+  if ( EFI_SUCCESS != Status || InfoTypesBuffer == NULL ) {
+    if (  InfoTypesBuffer != NULL ){
+      gtBS->FreePool ( InfoTypesBuffer );
+      InfoTypesBuffer = NULL;
+    }
+  
+    StandardLib->RecordAssertion (
+                     StandardLib,
+                     EFI_TEST_ASSERTION_FAILED,
+                     gTestGenericFailureGuid,
+                     L"GetSupportedTypes---Failed",
+                     L"%a:%d:Status - %r",
+                     __FILE__,
+                     (UINTN)__LINE__,
+                     Status
+                     );
+    return Status;  
+  } 
+
+  InformationType = InfoTypesBuffer;
+    
+  for( Index = 0; Index < InfoTypesBufferCount; Index++){
+    //
+    //Call GetInformation to check 
+    //
+    Status = AdapterInfo->GetInformation(
+                              AdapterInfo,
+                              InformationType,
+                              &InformationBlock,
+                              &InformationBlockSize
+                              );
+
+    if ( Status == EFI_NOT_FOUND ) {
+        //A valid information type was not found
+        //in this case, according to the UEFI Specification, the InformationBlockSize must be 0
+        //This check, is the main purpose of this test
+        if ( InformationBlockSize != 0 ) {
+            AssertionType = EFI_TEST_ASSERTION_FAILED;
+            testFailed = 1;
+            StandardLib->RecordAssertion (
+                StandardLib,
+                AssertionType,
+                gAdapterInfoBBTestConformanceAssertionGuid003,
+                L"EFI_ADAPTER_INFORMATION_PROTOCOL.GetInformation - GetInformation() returns EFI_NOT_FOUND but InformationBlockSize is not set to 0.",
+                L"%a:%d: Status - %r",
+                __FILE__,
+                (UINTN)__LINE__,
+                Status
+            );
+        }
+    }
+
+    if ( InformationBlock != NULL ) {
+      gtBS->FreePool (InformationBlock);
+      InformationBlock = NULL;
+    }
+    InformationType++;
+  }
+  
+  if(InfoTypesBuffer != NULL){
+    gtBS->FreePool(InfoTypesBuffer);
+    InfoTypesBuffer = NULL;
+  }
+
+  if (testFailed == 0)
+  {
+    AssertionType = EFI_TEST_ASSERTION_PASSED;
+    StandardLib->RecordAssertion (
+          StandardLib,
+          AssertionType,
+          gAdapterInfoBBTestConformanceAssertionGuid003,
+          L"EFI_ADAPTER_INFORMATION_PROTOCOL.GetInformation - GetInformation() of valid InformationType returning EFI_NOT_FOUND cases are passed",
+          L"%a:%d: Status - %r",
+          __FILE__,
+         (UINTN)__LINE__,
+          Status
+         );
+    return EFI_SUCCESS;
+  }
+
+  return EFI_NOT_FOUND;
 }
 
 EFI_STATUS
